@@ -1,0 +1,81 @@
+import socket
+
+print(socket.gethostname())
+HOST = ('192.168.0.105', 7771)
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#sock = socket.socket()
+sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+
+sock.bind(HOST)
+sock.listen()
+
+def send_file(file_name):
+    print(file_name)
+    try:
+        with open(file_name, 'rb') as f:   
+            client.send(OK)
+            client.send(f.read())
+
+    except IOError:
+        client.send(ERR_404)    
+
+def index():
+    with open('1.html', 'r', encoding='utf-8') as f:
+        res = f.read()
+    return res.encode('utf-8')
+
+def cat2():
+    with open('2.html', 'r', encoding='utf-8') as f:
+        res = f.read()
+    return res.encode('utf-8')
+
+def get_users():
+    res = """
+    <h1> USERS </h1>
+    <p>user 1<p>
+    <p>user 2<p>
+    <p>user 3<p>
+
+    """
+    return res.encode('utf-8')
+
+route =  {
+    "/" : index,
+    "about/" : about
+}
+
+OK = b'HTTP/1.1 200 OK\n\n'
+ERR_404 = b'HTTP/1.1 404 not Found\n\n'
+
+print('---start---')
+while True:
+    print('---слушаю---')
+    client, addr = sock.accept()
+    data = client.recv(4096*2)
+    print(data)
+    if data:
+        data = data.decode('utf-8').split('\n')
+        print(data[0])
+        method, addr, ver = data[0].split()
+
+        with client:
+            print(addr)
+            if addr == '/':
+                print('index')
+                client.send(OK)
+                client.send(index())
+            elif addr == '/cat2':
+                print('cat2')
+                client.send(OK)
+                client.send(cat2())
+            elif addr[-4:] in ['.jpg', '.png', 'gif', '.ico']:
+                send_file(addr.strip('/'))
+            elif addr == '/users':
+                print('users')
+                client.send(OK)
+                client.send(get_users())
+            else:
+                print('error')
+                client.send(ERR_404)  
+            print(*data, sep = '/n')

@@ -1,0 +1,8 @@
+import socket
+from time import sleep
+import sys
+
+
+GET / HTTP/1.1
+
+HTTP/1.1 200 OK
