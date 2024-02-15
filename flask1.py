@@ -16,7 +16,7 @@ def send_file2(file_name):
     try:
         return(send_file(file_name + '.jpg', mimetype='image/gif', as_attachment = False))
     except FileNotFoundError:
-        return('Error')
+        return('Error. File not found')
 
 app = Flask(__name__)
 
