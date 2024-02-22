@@ -19,5 +19,9 @@ def index():
         res += f"<p> пользователь {user} </p>"
     return(res)
 
+@app.route('/users/')
+def users2():
+    return render_template('1.html')
 
-app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
