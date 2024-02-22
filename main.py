@@ -23,5 +23,9 @@ def index():
 def users2():
     return render_template('1.html', users = users, head = '', color = 'red')
 
+@app.route('/tst/')
+def tst2():
+    return render_template('2.html', users = users, head = '', color = 'red')
+
 if __name__ == '__main__':
     app.run(debug=True)
