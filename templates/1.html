@@ -13,7 +13,7 @@
     {% endif %}
 
     {% for user in users %}
-        <p {% if user == 'user2' %} style="color:red" {% endif %}>{{ user }}</p>
+        <p {% if user == 'user2' %} style="color:red" {% endif %}>{{loop.index}}. {{ user }}</p>
     {% endfor %}
     <p>user 1</p>
     <p>user 2</p>
