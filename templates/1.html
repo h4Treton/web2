@@ -3,10 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Users</title>
+    <title>{{ head }}</title>
 </head>
 <body>
-    <h1>USERS</h1>
+    {% if head %}
+        <h1>{{ head }}</h1>
+    {% else %}
+        <h1> Неизвестные </h1>
+    {% endif %}
+
+    {% for user in users %}
+        <p {% if user == 'user2' %} style="color:red" {% endif %}>{{ user }}</p>
+    {% endfor %}
     <p>user 1</p>
     <p>user 2</p>
     <p>user 3</p>
