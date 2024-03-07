@@ -1,9 +1,6 @@
-from flask import Flask
+from flask import Flask, request
 from flask import render_template
 import os
-
-
-from requests import request
 
 
 from models import db2, Quiz, Question, db_add_new_data
@@ -23,6 +20,6 @@ with app.app_context():
 
 @app.route('/', methods = ['POST', 'GET'])
 def index():
-    if request.method == 
-    quizes = Quiz.query.all()
-    return render_template('start.html', quizes)
+    if request.method == 'POST':
+        quizes = Quiz.query.all()
+        return render_template('start.html', quizes)
